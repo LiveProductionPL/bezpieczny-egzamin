@@ -1,14 +1,14 @@
-# Bezpieczny Egzamin — Kiosk Guard (Windows Client)
+# Bezpieczny Egzamin (Windows Client)
 
-**Bezpieczny Egzamin (Kiosk Guard)** to otwartoźródłowa aplikacja kliencka dla systemu Windows (C# / .NET WinForms), przeznaczona dla uczniów i szkół korzystających z platformy edukacyjnej [egzamin.info.pl](https://egzamin.info.pl/).
+**Bezpieczny Egzamin** to otwartoźródłowa aplikacja kliencka dla systemu Windows (C# / .NET WinForms), przeznaczona dla uczniów i szkół korzystających z platformy edukacyjnej [egzamin.info.pl](https://egzamin.info.pl/).
 
-Aplikacja uruchamia dedykowane środowisko egzaminacyjne w trybie pełnoekranowym (Kiosk) oraz przeprowadza diagnostykę połączenia ze stanowiskiem egzaminacyjnym.
+Aplikacja uruchamia dedykowane środowisko egzaminacyjne w trybie pełnoekranowym oraz przeprowadza diagnostykę połączenia ze stanowiskiem egzaminacyjnym.
 
 ---
 
 ## Informacje o projekcie / Project Information (Certum Open Source Verification)
 
-* **Nazwa projektu / Project Name:** Bezpieczny Egzamin — Kiosk Guard
+* **Nazwa projektu / Project Name:** Bezpieczny Egzamin
 * **Autor / Author & Maintainer:** Karol Kowalski (Live Production)
 * **Strona projektu / Website:** [https://egzamin.info.pl/](https://egzamin.info.pl/)
 * **Organizacja GitHub / GitHub Organization:** [https://github.com/LiveProductionPL](https://github.com/LiveProductionPL)
