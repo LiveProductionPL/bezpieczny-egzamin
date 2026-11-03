@@ -8,12 +8,15 @@ Aplikacja uruchamia dedykowane środowisko egzaminacyjne w trybie pełnoekranowy
 
 ## Informacje o projekcie / Project Information (Certum Open Source Verification)
 
+Projekt jest indywidualnym projektem Karola Kowalskiego, rozwijanym prywatnie, poza działalnością gospodarczą. Autorem i wydawcą aplikacji jest Karol Kowalski, występujący o certyfikat jako osoba fizyczna. `LiveProductionPL` jest nazwą osobistego konta GitHub autora.
+
 * **Nazwa projektu / Project Name:** Bezpieczny Egzamin
-* **Autor / Author & Maintainer:** Karol Kowalski (Live Production)
+* **Autor / Author & Maintainer:** Karol Kowalski (osoba fizyczna / individual developer)
 * **Strona projektu / Website:** [https://egzamin.info.pl/](https://egzamin.info.pl/)
-* **Organizacja GitHub / GitHub Organization:** [https://github.com/LiveProductionPL](https://github.com/LiveProductionPL)
+* **Typ projektu / Project type:** Indywidualny projekt Open Source / Individual Open Source project
+* **Konto autora w GitHub / Author's personal GitHub account:** [LiveProductionPL](https://github.com/LiveProductionPL)
 * **Licencja / License:** MIT License (Open Source — see [LICENSE](./LICENSE))
-* **Wersja / Version:** 2.1.0
+* **Wersja / Version:** 2.1.1
 
 ---
 

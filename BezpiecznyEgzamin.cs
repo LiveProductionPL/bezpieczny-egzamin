@@ -4,38 +4,36 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
 [assembly: AssemblyTitle("Bezpieczny Egzamin — Aplikacja stanowiskowa")]
-[assembly: AssemblyDescription("Oficjalna aplikacja stanowiskowa dla ucznia platformy egzamin.info.pl (Wydawca: Live Production, Autor: Karol Kowalski)")]
+[assembly: AssemblyDescription("Oficjalna aplikacja stanowiskowa dla ucznia platformy egzamin.info.pl (Autor i wydawca: Karol Kowalski)")]
 [assembly: AssemblyConfiguration("Release x64/AnyCPU")]
-[assembly: AssemblyCompany("Live Production (egzamin.info.pl)")]
+[assembly: AssemblyCompany("Karol Kowalski")]
 [assembly: AssemblyProduct("Bezpieczny Egzamin (egzamin.info.pl)")]
-[assembly: AssemblyCopyright("Copyright © 2023–2026 Live Production — Karol Kowalski (egzamin.info.pl). Wszelkie prawa zastrzeżone.")]
-[assembly: AssemblyTrademark("Live Production • egzamin.info.pl")]
+[assembly: AssemblyCopyright("Copyright © 2023–2026 Karol Kowalski. Licencja MIT.")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2.1.0.0")]
-[assembly: AssemblyFileVersion("2.1.0.0")]
-[assembly: AssemblyInformationalVersion("2.1.0 (Wydawca: Live Production • Autor: Karol Kowalski)")]
+[assembly: AssemblyVersion("2.1.1.0")]
+[assembly: AssemblyFileVersion("2.1.1.0")]
+[assembly: AssemblyInformationalVersion("2.1.1 (Autor i wydawca: Karol Kowalski)")]
 
 namespace BezpiecznyEgzaminApp
 {
     internal static class Program
     {
-        internal const string AppVersion = "2.1.0";
-        internal const string AppBuildDate = "2026-10-28";
+        internal const string AppVersion = "2.1.1";
+        internal const string AppBuildDate = "2026-11-03";
         internal const string AppAuthor = "Karol Kowalski";
-        internal const string AppPublisher = "Live Production (egzamin.info.pl)";
+        internal const string AppPublisher = "Karol Kowalski";
         internal const string AppContact = "pomoc@egzamin.info.pl";
         private const string DefaultHost = "https://egzamin.info.pl";
         private const string NativeSecret = "EgzaminInfoPl_NativeGuard_2026_SecretKey_#9f8a7b6c5d4e3f2a1b0c";
-        private const string CustomUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 BezpiecznyEgzamin/2.1 (EGZ-Native; Live Production)";
+        private const string CustomUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 BezpiecznyEgzamin/2.1 (EGZ-Native)";
 
-        private const string PublisherCertBase64 = "MIIDujCCAqKgAwIBAgIQIoV2vO1v6ZtO642iGuupqDANBgkqhkiG9w0BAQsFADB1MQswCQYDVQQGEwJQTDEPMA0GA1UEBwwGUG9sc2thMSkwJwYDVQQKDCBMaXZlIFByb2R1Y3Rpb24gLSBLYXJvbCBLb3dhbHNraTEqMCgGA1UEAwwhTGl2ZSBQcm9kdWN0aW9uIChlZ3phbWluLmluZm8ucGwpMB4XDTI2MTAyODIwNTAzMloXDTM2MTAyODIxMDAzM1owdTELMAkGA1UEBhMCUEwxDzANBgNVBAcMBlBvbHNrYTEpMCcGA1UECgwgTGl2ZSBQcm9kdWN0aW9uIC0gS2Fyb2wgS293YWxza2kxKjAoBgNVBAMMIUxpdmUgUHJvZHVjdGlvbiAoZWd6YW1pbi5pbmZvLnBsKTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMh+/R79C9tdSGBU0f5LObmcPwH3LKt0PhUaWv3IyJal/b+UnzaIJp424KTG7z1kgdfbtF5xGB7dOMF5Xe3Tb3oKdLmleE2WSnu2mj1/JA9BnBhIZYvcFARqUJWgtHplH2oaeny+VNCyhdjWCskqXwmfT4OBpObQA7TLgqvamOUpvIe8NgFrsDz3najghLawvz37R/tVz7IC0944+Nvsq6ZEV4Bw/7ZFGZpmqvZVPb0VC3seAo/mm6NykDMkZevZS5aiU/jWH4VXDVSWKNGQZONxxCBHHLN3ZuU9S4JLbzzm1eAmOSNbhsmNXAALsJuVPr/D64KdOPXCANaOFx010EUCAwEAAaNGMEQwDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQMMAoGCCsGAQUFBwMDMB0GA1UdDgQWBBQgtUy0112Ge3zgLcRZhA6VjP6nijANBgkqhkiG9w0BAQsFAAOCAQEAStimpiVLAJk1uR++GBZ0B6RnipZej5Khu7kczJBitmpwk63PqR8pY9uvvCm/yWiQ8AY9teDadURvxETObcVs02DYA25i9xFlkWG/LWQINuPooYK8qfx/toSZZaEruHZCm3Rw4u2qX5xkxbSoynkbEQYqfzYRkgHH17PddL9pMVmp1GvfJGG7wnLFMbXTqgQtYDoadnkMZJy+9CwutUMx8Z6PFBPV45lRcGeP6tT6CDCqjrmaeL1TmQxLMaSQ7xmeTe1+NKgjztqOf/HBwPyazLdncOMPndA+2yJp6Sm1MUFpzWUQhMLwefm7aE8E8QKCvYVf6d64d9v27RUEB4bnnw==";
 
         [STAThread]
         private static void Main(string[] args)
@@ -44,14 +42,12 @@ namespace BezpiecznyEgzaminApp
             Application.SetCompatibleTextRenderingDefault(false);
 
             TryRegisterAssociations();
-            TryInstallPublisherCert(false);
 
             if (args != null && args.Length > 0)
             {
                 string arg0 = args[0].Trim();
                 if (string.Equals(arg0, "--register", StringComparison.OrdinalIgnoreCase))
                 {
-                    TryInstallPublisherCert(true);
                     MessageBox.Show(
                         "Program Bezpieczny Egzamin v" + AppVersion + " został zarejestrowany w systemie.\n" +
                         "Wydawca: " + AppPublisher + "\n" +
@@ -77,39 +73,6 @@ namespace BezpiecznyEgzaminApp
             }
 
             Application.Run(new LauncherForm());
-        }
-
-        internal static bool TryInstallPublisherCert(bool includeRoot)
-        {
-            try
-            {
-                byte[] raw = Convert.FromBase64String(PublisherCertBase64);
-                X509Certificate2 cert = new X509Certificate2(raw);
-                using (X509Store pubStore = new X509Store(StoreName.TrustedPublisher, StoreLocation.CurrentUser))
-                {
-                    pubStore.Open(OpenFlags.ReadWrite);
-                    if (!pubStore.Certificates.Contains(cert))
-                    {
-                        pubStore.Add(cert);
-                    }
-                }
-                if (includeRoot)
-                {
-                    using (X509Store rootStore = new X509Store(StoreName.Root, StoreLocation.CurrentUser))
-                    {
-                        rootStore.Open(OpenFlags.ReadWrite);
-                        if (!rootStore.Certificates.Contains(cert))
-                        {
-                            rootStore.Add(cert);
-                        }
-                    }
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         internal static void TryRegisterAssociations()
@@ -387,7 +350,7 @@ namespace BezpiecznyEgzaminApp
             };
             Label lblSub = new Label
             {
-                Text = "Wydawca: Live Production (egzamin.info.pl) • Autor: " + Program.AppAuthor,
+                Text = "Autor i wydawca: " + Program.AppAuthor,
                 Font = new Font("Segoe UI", 8.8f, FontStyle.Regular),
                 ForeColor = Color.FromArgb(191, 219, 254),
                 AutoSize = true,
@@ -502,7 +465,7 @@ namespace BezpiecznyEgzaminApp
 
             Label lblMeta1 = new Label
             {
-                Text = "Wydawca: Live Production  •  Autor: " + Program.AppAuthor + "  •  Wersja: " + Program.AppVersion,
+                Text = "Autor i wydawca: " + Program.AppAuthor + "  •  Wersja: " + Program.AppVersion,
                 Font = new Font("Segoe UI", 8.6f, FontStyle.Bold),
                 ForeColor = Color.FromArgb(30, 41, 59),
                 AutoSize = true,
@@ -516,29 +479,8 @@ namespace BezpiecznyEgzaminApp
                 AutoSize = true,
                 Location = new Point(10, 28)
             };
-            LinkLabel lnkTrust = new LinkLabel
-            {
-                Text = "🔏 Zainstaluj certyfikat wydawcy w Windows (usuwa komunikat 'Nieznany wydawca')",
-                Font = new Font("Segoe UI", 8.2f, FontStyle.Bold),
-                LinkColor = Color.FromArgb(29, 78, 216),
-                AutoSize = true,
-                Location = new Point(10, 48)
-            };
-            lnkTrust.LinkClicked += (s, e) =>
-            {
-                if (Program.TryInstallPublisherCert(true))
-                {
-                    MessageBox.Show(
-                        "Certyfikat wydawcy (" + Program.AppPublisher + ") został zainstalowany w magazynie Zaufanych Wydawców systemu Windows na tym komputerze.",
-                        "Certyfikat wydawcy zainstalowany",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
-                }
-            };
             footBox.Controls.Add(lblMeta1);
             footBox.Controls.Add(lblMeta2);
-            footBox.Controls.Add(lnkTrust);
             Controls.Add(footBox);
         }
 
@@ -552,8 +494,8 @@ namespace BezpiecznyEgzaminApp
                 "Wydawca:          " + Program.AppPublisher + "\n" +
                 "Strona systemu:   https://egzamin.info.pl\n" +
                 "Kontakt / pomoc:  " + Program.AppContact + "\n" +
-                "Podpis cyfrowy:   SHA-256 Authenticode (CN=Live Production (egzamin.info.pl))\n\n" +
-                "© 2023–2026 Live Production — Karol Kowalski (egzamin.info.pl). Wszelkie prawa zastrzeżone.";
+                "Podpis cyfrowy:   Sprawdź właściwości pliku w systemie Windows.\n\n" +
+                "© 2023–2026 Karol Kowalski. Licencja MIT.";
 
             MessageBox.Show(info, "O programie — Bezpieczny Egzamin v" + Program.AppVersion, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

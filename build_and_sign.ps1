@@ -17,17 +17,17 @@ if (Test-Path $ico) {
     & $csc /nologo /target:winexe /optimize+ "/out:$out" $src
 }
 
-Write-Host "2. Wyszukiwanie certyfikatu Code Signing (Certum SimplySign / Live Production)..." -ForegroundColor Cyan
+Write-Host "2. Wyszukiwanie certyfikatu Code Signing (Certum SimplySign / Karol Kowalski)..." -ForegroundColor Cyan
 # Najpierw szukamy oficjalnego certyfikatu Certum (wystawionego przez Certum Code Signing CA)
 $cert = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert |
-    Where-Object { $_.Issuer -match "Certum" -and $_.NotAfter -gt (Get-Date) } |
+    Where-Object { $_.Issuer -match "Certum" -and $_.Subject -match "Karol Kowalski" -and $_.NotAfter -gt (Get-Date) } |
     Sort-Object NotAfter -Descending |
     Select-Object -First 1
 
 if (-not $cert) {
     Write-Host "   Uwaga: Nie znaleziono aktywnego certyfikatu Certum SimplySign (upewnij sie, ze aplikacja SimplySign Desktop jest zalogowana)." -ForegroundColor Yellow
     $cert = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert |
-        Where-Object { $_.Subject -match "Live Production|Karol Kowalski" -and $_.NotAfter -gt (Get-Date) } |
+        Where-Object { $_.Subject -match "Karol Kowalski" -and $_.NotAfter -gt (Get-Date) } |
         Sort-Object NotAfter -Descending |
         Select-Object -First 1
 }
